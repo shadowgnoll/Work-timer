@@ -1,0 +1,22 @@
+Shoes.app(title: "PomoTimer", width:200, height: 84, resizable: false) do
+  sessiontime = 0
+
+stack :width => "100%" do
+  tagline "Set work time"
+end
+
+stack :width => "100%" do
+   sessiontime = edit_line width: 280
+  end
+  stack :width => "100%" do
+    button "Start work session" do      
+    alert("Session for #{sessiontime.text} minutes ready, press ok to begin.")
+    timer(sessiontime.text.to_i * 60) do 
+ 
+      alert("times up, click ok to start your 7 minute break")
+      timer(7 * 60)
+    end
+
+    end
+    end
+  end
