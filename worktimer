@@ -1,23 +1,32 @@
-Shoes.app(title: "PomoTimer", width:200, height: 84, resizable: false) do
+Shoes.app(title: "PomoTimer", width:210, height: 84, resizable: true) do
+  background black
   sessiontime = 0
 
   stack :width => "100%" do
-    tagline "Set work time"
+    workText = tagline "Set work time"
+    workText.stroke = white
+    workText.align = "center"
   end
 
   stack :width => "100%" do
    sessiontime = edit_line width: 280
  end
- stack :width => "100%" do
-  button "Start work session" do      
+ flow :width => 110  do
+  startButton = button "Start session" do 
       #check to see if the input is a number, and greater than 0
       input = sessiontime.text.to_i
+      info(input)
       if input > 0
         alert("Session for #{sessiontime.text} minutes ready, press ok to begin.")
+        #disable the button so the user can't start another session
+        startButton.state = "disabled"
         timer(sessiontime.text.to_i * 60) do 
           alert("times up, click ok to start your 7 minute break")
-          timer(7 * 60)
+          timer(7 * 60) do
+          #restore button to usable state
+          startButton.state = "nil"
         end
+      end
       else
         alert("Please put in a valid value!")
       end
@@ -25,4 +34,10 @@ Shoes.app(title: "PomoTimer", width:200, height: 84, resizable: false) do
 
     end
   end
+    flow :width => 100 do
+    stopSession = button "Stop session" do
+      stopSession.margin_left = 5
+      
+    end
 end
+  end
